@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Pusher;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,8 +12,17 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get( '/', function () {
+    return view( 'welcome' );
+} );
+
+Route::middleware( [ 'auth:sanctum', config( 'jetstream.auth_session' ), 'verified',] )->group( function () {
+
+    Route::get( '/dashboard', function () {
+        return view( 'dashboard' );
+    } )->name( 'dashboard' );
+
+    Route::get( '/pusher-test', Pusher::class )->name( 'pusher-test' );
+} );
