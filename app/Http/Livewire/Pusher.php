@@ -7,11 +7,17 @@ use Livewire\Component;
 
 class Pusher extends Component {
 
-    public $quote;
+    public $quote, $userId;
 
-    protected $listeners = [
-        'echo:divi-channel,PusherTest' => 'handleBroadcastEvent',
-    ];
+    public function getListeners(){
+        return [
+            "echo-private:divi-channel.{$this->userId},PusherTest" => "handleBroadcastEvent"
+        ];
+    }
+
+    public function mount() {
+        $this->userId = auth()->user()->id;
+    }
 
     public function handleBroadcastEvent($data) {
         $this->quote = $data['message'];

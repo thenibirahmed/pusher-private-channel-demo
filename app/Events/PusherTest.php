@@ -34,7 +34,7 @@ class PusherTest implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('divi-channel'),
+            new PrivateChannel('divi-channel.'.auth()->user()->id),
         ];
     }
 }
